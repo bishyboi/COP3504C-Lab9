@@ -15,8 +15,17 @@ class LinkedList
 
 public:
     // Code from: https://en.cppreference.com/w/cpp/iterator/iterator 
+    // and https://medium.com/geekculture/iterator-design-pattern-in-c-42caec84bfc 
     //FIXME: implement iterator class methods
-    class iterator: public std::iterator<>
+    class Iterator
+    {
+    public:
+        T operator*() const;
+        Iterator& operator++();
+        Iterator& operator--();
+        bool operator==(Iterator const &rhs);
+        bool operator!=(Iterator const &rhs);
+    }
     void add(T data);
     void remove(T element);
     bool isEmpty() const;
@@ -30,6 +39,7 @@ public:
     void remove(T element);
 };
 
+//From Linked List lecture slides
 template <typename T>
 void LinkedList<T>::add(T data)
 {
@@ -43,6 +53,7 @@ void LinkedList<T>::add(T data)
     }
 }
 
+//From Linked List lecture slides
 template <typename T>
 void LinkedList<T>::remove(T element)
 {

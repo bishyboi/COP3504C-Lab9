@@ -14,6 +14,9 @@ class LinkedList
     Node *last = nullptr;
 
 public:
+    // Code from: https://en.cppreference.com/w/cpp/iterator/iterator 
+    //FIXME: implement iterator class methods
+    class iterator: public std::iterator<>
     void add(T data);
     void remove(T element);
     bool isEmpty() const;
@@ -22,7 +25,9 @@ public:
     bool contains(T element) const;
     void enqueue(T element);
     void dequeue();
-    void pop
+    void pop();
+    void clear();
+    void remove(T element);
 };
 
 template <typename T>

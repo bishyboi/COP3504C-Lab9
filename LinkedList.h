@@ -20,14 +20,34 @@ public:
     class Iterator
     {
     public:
-        T operator*() const;
+        Node currentNode= NULL;
+        Iterator()
+        {
+
+        }
+        //Return the element at the iterator's current position in the queue
+        T operator*() const
+        {
+            return 
+        }
+
+        //Pre-increment overload; advance the iterator one position in the list. Return this iterator. NOTE: if the iterator has reached the end of the list (past the last element), its data should be equal to LinkedList<T>::end()
         Iterator& operator++();
+
+        //Pre-decrement overload; recedes one element. Return this iterator. NOTE: if the iterator has reached the end of the list (before the first element), its data should be equal to LinkedList<T>::end()
         Iterator& operator--();
+
+        //Return true it both iterators point to the same node in the list, and false otherwise
         bool operator==(Iterator const &rhs);
+
+        //Return false it both iterators point to the same node in the list, and true otherwise
         bool operator!=(Iterator const &rhs);
     }
     void add(T data);
     void remove(T element);
+    Iterator begin() const;
+    Iterator tail() const;
+    Iterator end() const;
     bool isEmpty() const;
     T getFront() const;
     T getBack() const;

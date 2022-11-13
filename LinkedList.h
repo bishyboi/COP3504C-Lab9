@@ -3,48 +3,63 @@
 template <typename T>
 class LinkedList
 {
+public:
     struct Node
     {
-        T data;
+        T *data;
         Node *next;
         Node *previous;
         Node(T _data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
     };
-    Node *first = nullptr;
-    Node *last = nullptr;
 
-public:
-    // Code from: https://en.cppreference.com/w/cpp/iterator/iterator 
-    // and https://medium.com/geekculture/iterator-design-pattern-in-c-42caec84bfc 
-    //FIXME: implement iterator class methods
     class Iterator
     {
     public:
-        Node currentNode= NULL;
-        Iterator()
-        {
+        Node *currentNode;
 
+        // TODO: Could cause possible problem, solution may be to make current node a pointer
+        //  to first node automatically and create a set function
+        Iterator(Node _currentNode)
+        {
+            this->currentNode = _currentNode;
         }
-        //Return the element at the iterator's current position in the queue
+
         T operator*() const
         {
-            return 
+            return *(currentNode->data);
         }
 
-        //Pre-increment overload; advance the iterator one position in the list. Return this iterator. NOTE: if the iterator has reached the end of the list (past the last element), its data should be equal to LinkedList<T>::end()
-        Iterator& operator++();
+        // TODO: Ensure that final result matches end() function
+        //FIXME: Not properly returning iterator
+        Iterator& operator++()
+        {
+            currentNode = currentNode->next;
+            Iterator iter = Iterator(&currentNode);
+            return iter;
+        }
 
-        //Pre-decrement overload; recedes one element. Return this iterator. NOTE: if the iterator has reached the end of the list (before the first element), its data should be equal to LinkedList<T>::end()
-        Iterator& operator--();
+        //FIXME: Not properly returning iterator
+        Iterator &operator--()
+        {
+            currentNode = currentNode->previous;
+            return &currentNode;
+        }
 
-        //Return true it both iterators point to the same node in the list, and false otherwise
-        bool operator==(Iterator const &rhs);
+        bool operator==(Iterator const &rhs)
+        {
+            return (this->currentNode == rhs->currentNode);
+        }
 
-        //Return false it both iterators point to the same node in the list, and true otherwise
-        bool operator!=(Iterator const &rhs);
-    }
-    void add(T data);
-    void remove(T element);
+        bool operator!=(Iterator const &rhs)
+        {
+            return !(this == rhs);
+        }
+        friend class LinkedList;
+    };
+
+    Node *first = nullptr;
+    Node *last = nullptr;
+
     Iterator begin() const;
     Iterator tail() const;
     Iterator end() const;
@@ -59,31 +74,86 @@ public:
     void remove(T element);
 };
 
-//From Linked List lecture slides
 template <typename T>
-void LinkedList<T>::add(T data)
+LinkedList<T>::Iterator LinkedList<T>::begin() const
 {
-    Node *newNode = new Node(data);
-    if (first == nullptr)
-        first = last = newNode;
-    else 
-    {
-        last->next = newNode;
-        last = newNode;
-    }
+    return LinkedList<T>::Iterator(this->first);
 }
 
-//From Linked List lecture slides
 template <typename T>
-void LinkedList<T>::remove(T element)
+LinkedList<T>::Iterator LinkedList<T>::tail() const
 {
-    Node *removeMe = first;
-    T returnMe = first->data;
-    if (first == nullptr)
-        throw EmptyException(); // Not real 
-    if (last == first)
-        last = nullptr;
-    first = first->next;
-    delete removeMe;
-    return returnMe;
+    return LinkedList<T>::Iterator(this->last);
+}
+
+template <typename T>
+LinkedList<T>::Iterator LinkedList<T>::end() const
+{
+    return LinkedList<T>::Iterator(nullptr);
+}
+
+template <typename T>
+bool LinkedList<T>::isEmpty() const
+{
+    return (this->first == nullptr);
+}
+
+template <typename T>
+T LinkedList<T>::getFront() const
+{
+    return *(this->first);
+}
+
+template <typename T>
+T LinkedList<T>::getBack() const
+{
+    return *(this->last);
+}
+
+template <typename T>
+bool LinkedList<T>::contains(T element) const
+{
+    LinkedList<T>::Iterator iter = Iterator(this->first);
+    while (*(iter->currentNode->data) != element && iter->currentNode->next == nullptr)
+    {
+        iter++;
+        if (*(iter->currentNode->data) == element)
+            return true;
+    }
+    return false;
+}
+
+template <typename T>
+void LinkedList<T>::enqueue(T element)
+{
+    Node *newNode = new Node(T, this->last, nullptr);
+    Node last = &(this->last);
+
+    last.next = *newNode;
+}
+
+template <typename T>
+void LinkedList<T>::dequeue()
+{
+    Node *second = this->first->next;
+    delete this->first;
+    this->first = second;
+}
+
+template <typename T>
+void LinkedList<T>::pop()
+{
+    Node *secondToLast = this->last->previous;
+    delete this->last;
+    this->last = secondToLast;
+}
+
+
+//FIXME: Incomplete
+template <typename T>
+void LinkedList<T>::clear()
+{
+    LinkedList<T>::Iterator iter = Iterator(this->first);
+    Node *nextNode = nullptr;
+    
 }

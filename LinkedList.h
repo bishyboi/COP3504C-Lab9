@@ -6,60 +6,82 @@ class LinkedList
 public:
     struct Node
     {
-        T *data;
+        // A pointer to the data contained in the node.
+        T data;
+
+        // Pointer to the next sequential node in the linked list.
         Node *next;
+        
+        // Pointer to the previous sequential node in the linked list.
         Node *previous;
-        Node(T _data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
+
+        Node(T &_data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
+
+        ~Node()
+        {
+
+            if (this->previous != nullptr)
+            {
+                delete this->previous->next;
+                this->previous->next = this->next;
+            }
+
+            if (this->next != nullptr)
+            {
+                delete this->next->previous;
+                this->next->previous = this->previous;
+            } 
+        }
     };
 
     class Iterator
     {
     public:
-        Node *currentNode;
+        //Directly attached to a node in linked list.
+        Node currentNode;
 
-        // TODO: Could cause possible problem, solution may be to make current node a pointer
-        //  to first node automatically and create a set function
-        Iterator(Node _currentNode)
+        Iterator(Node &_currentNode)
         {
             this->currentNode = _currentNode;
         }
 
         T operator*() const
         {
-            return *(currentNode->data);
+            return this->currentNode->data;
         }
 
         // TODO: Ensure that final result matches end() function
-        //FIXME: Not properly returning iterator
         Iterator& operator++()
         {
-            currentNode = currentNode->next;
-            Iterator iter = Iterator(&currentNode);
+            this->currentNode = currentNode->next;
+            Iterator iter = Iterator(this->currentNode);
             return iter;
         }
 
-        //FIXME: Not properly returning iterator
         Iterator &operator--()
         {
-            currentNode = currentNode->previous;
-            return &currentNode;
+            this->currentNode = currentNode->previous;
+            Iterator iter = Iterator(this->currentNode);
+            return iter;
         }
 
         bool operator==(Iterator const &rhs)
         {
-            return (this->currentNode == rhs->currentNode);
+            return (this->currentNode == rhs.currentNode);
         }
 
         bool operator!=(Iterator const &rhs)
         {
-            return !(this == rhs);
+            return (this->currentNode != rhs.currentNode);
         }
+        
         friend class LinkedList;
     };
 
     Node *first = nullptr;
     Node *last = nullptr;
 
+    LinkedList() {}
     Iterator begin() const;
     Iterator tail() const;
     Iterator end() const;
@@ -75,19 +97,19 @@ public:
 };
 
 template <typename T>
-LinkedList<T>::Iterator LinkedList<T>::begin() const
+typename LinkedList<T>::Iterator LinkedList<T>::begin() const
 {
     return LinkedList<T>::Iterator(this->first);
 }
 
 template <typename T>
-LinkedList<T>::Iterator LinkedList<T>::tail() const
+typename LinkedList<T>::Iterator LinkedList<T>::tail() const
 {
     return LinkedList<T>::Iterator(this->last);
 }
 
 template <typename T>
-LinkedList<T>::Iterator LinkedList<T>::end() const
+typename LinkedList<T>::Iterator LinkedList<T>::end() const
 {
     return LinkedList<T>::Iterator(nullptr);
 }
@@ -101,7 +123,7 @@ bool LinkedList<T>::isEmpty() const
 template <typename T>
 T LinkedList<T>::getFront() const
 {
-    return *(this->first);
+    return *(this->first->data);
 }
 
 template <typename T>
@@ -113,11 +135,11 @@ T LinkedList<T>::getBack() const
 template <typename T>
 bool LinkedList<T>::contains(T element) const
 {
-    LinkedList<T>::Iterator iter = Iterator(this->first);
-    while (*(iter->currentNode->data) != element && iter->currentNode->next == nullptr)
+    LinkedList<T>::Iterator iter = Iterator(*this->first);
+    while (iter.currentNode.data != element && iter.currentNode.next == nullptr)
     {
         iter++;
-        if (*(iter->currentNode->data) == element)
+        if (iter.currentNode.data == element)
             return true;
     }
     return false;
@@ -126,10 +148,10 @@ bool LinkedList<T>::contains(T element) const
 template <typename T>
 void LinkedList<T>::enqueue(T element)
 {
-    Node *newNode = new Node(T, this->last, nullptr);
-    Node last = &(this->last);
+    Node *newNode = new Node(element, this->last, nullptr);
+    Node *last = this->last;
 
-    last.next = *newNode;
+    last->next = newNode;
 }
 
 template <typename T>
@@ -156,4 +178,18 @@ void LinkedList<T>::clear()
     LinkedList<T>::Iterator iter = Iterator(this->first);
     Node *nextNode = nullptr;
     
+}
+
+template <typename T>
+void LinkedList<T>::remove(T element)
+{
+    // Iterate through list until first occurrence of data using iterator
+    LinkedList<T>::Iterator iter = Iterator(this->first);
+    // Delete using ~Node destructor
+    while(*(iter->currentNode->data) != element)
+    {
+        iter++;
+        if (*(iter->currentNode->data) == element)
+            delete iter->currentNode;
+    }
 }

@@ -16,14 +16,14 @@ int main()
     }
 
     cout << endl
-         << endl
          << "Iterator Test:" << endl;
     list.iterTest();
-
     cout << endl;
-    cout << "contains(): Test #1: " << list.contains(5) ? "Pass" : "Fail";
-    cout << "contains(): Test #2: " << list.contains(6) ? "Pass" : "Fail";
-    cout << "contains(): Test #3: " << !list.contains(1) ? "Pass" : "Fail";
+    
+    cout << endl;
+    cout << "contains(): Test #1: " << (list.contains(5) ? "Pass" : "Fail") << endl;
+    cout << "contains(): Test #2: " << (list.contains(6) ? "Pass" : "Fail") << endl;
+    cout << "contains(): Test #3: " << (!list.contains(1) ? "Pass" : "Fail")<< endl;
 
     return 0;
 }

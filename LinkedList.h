@@ -151,7 +151,7 @@ bool LinkedList<T>::contains(T element) const
         return false;
         
     LinkedList<T>::Iterator iter = Iterator(this->first);
-    while (iter.currentNode->data != element && iter.currentNode->next == nullptr)
+    while (iter.currentNode->data != element && iter.currentNode->next != nullptr)
     {
         iter++;
         if (iter.currentNode->data == element)
@@ -220,7 +220,7 @@ void LinkedList<T>::iterTest() const
 
     while(iter.currentNode->next != nullptr)
     {
-        std::cout << iter.currentNode->data << std::endl;
+        std::cout << iter.currentNode->data << "HI" << std::endl;
         iter++;
     }
 

@@ -6,7 +6,7 @@ class LinkedList
 public:
     struct Node
     {
-        // A pointer to the data contained in the node.
+        // The data contained in the node.
         T data;
 
         // Pointer to the next sequential node in the linked list.

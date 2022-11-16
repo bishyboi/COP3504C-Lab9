@@ -6,27 +6,31 @@ using namespace std;
 
 int main()
 {
-    std::vector<int> vec = {3, 5, 3, 6, 7};
-    LinkedList<int> list;
+    std::vector<string> vec = {"alpha", "bravo", "charlie", "charlie", "dog", "echo", "foxtrot", "golf"};
+    LinkedList<string> list;
 
-    list.enqueue(3);
-    list.enqueue(4);
-    list.enqueue(5);
-    list.enqueue(6);
-    list.enqueue(7);
+    list.enqueue("alpha");
+    list.enqueue("bravo");
+    list.enqueue("charlie");
+    list.enqueue("charlie");
+    list.enqueue("dog");
+    list.enqueue("echo");
+    list.enqueue("foxtrot");
+    list.enqueue("golf");
 
     cout << endl
          << "Iterator Test:" << endl;
 
     list.iterTest();
-    cout << endl;
 
-
-
-    cout << endl;
-    cout << "contains(): Test #1: " << ((list.contains(5)==true) ? "Pass" : "Fail") << endl;
-    cout << "contains(): Test #2: " << ((list.contains(6)==true) ? "Pass" : "Fail") << endl;
-    cout << "contains(): Test #3: " << ((list.contains(1)==false) ? "Pass" : "Fail")<< endl;
-
+    list.remove("alpha");
+    list.iterTest();
+    cout<< endl;
+    list.remove("charlie");
+    list.iterTest();
+    cout<< endl;
+    list.remove("golf");
+    list.iterTest();
+    
     return 0;
 }

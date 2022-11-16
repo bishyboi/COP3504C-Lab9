@@ -80,12 +80,12 @@ public:
 
         bool operator==(Iterator const &rhs)
         {
-            return (this->currentNode == rhs->currentNode);
+            return (this->currentNode == rhs.currentNode);
         }
 
         bool operator!=(Iterator const &rhs)
         {
-            return (this->currentNode != rhs->currentNode);
+            return (this->currentNode != rhs.currentNode);
         }
         
         friend class LinkedList;
@@ -179,13 +179,9 @@ void LinkedList<T>::enqueue(T element)
     else
     {
         Node *newNode = new Node(element, nullptr, this->last);
-
-        std::cout << "The last node is " << this->last->data << std::endl;
         this->last->next = newNode;
-        std::cout << "End of list now points to "<< this->last->next->data << std::endl;
 
         this->last = newNode;
-        std::cout<< "Changing end of list to be New Node" << std::endl;
 
         if(this->last->next)
             std::cout<< "It is not pointing towards nullptr. This needs to be fixed" << std::endl;
@@ -195,11 +191,9 @@ void LinkedList<T>::enqueue(T element)
 template <typename T>
 void LinkedList<T>::dequeue()
 {
-    Node *secondNode = this->first->next;
-    delete this->first;
-
-    this->first = secondNode;
-    this->first->previous = nullptr;
+    Node *second = this->first->next;
+    this->first = second;
+    delete this->first->previous;
 }
 
 template <typename T>
@@ -221,7 +215,7 @@ void LinkedList<T>::clear()
     Node *temp = nullptr;
     while(iter.currentNode->next)
     {
-        temp = *iter.currentNode;
+        temp = iter.currentNode;
         iter++;
     }
 
@@ -233,11 +227,12 @@ void LinkedList<T>::remove(T element)
     // Iterate through list until first occurrence of data using iterator
     LinkedList<T>::Iterator iter = Iterator(this->first);
     // Delete using ~Node destructor
-    while(*(iter->currentNode->data) != element)
+    while((iter.currentNode->data) != element)
     {
+        if ((iter.currentNode->data) == element)
+            delete iter.currentNode;
+
         iter++;
-        if (*(iter->currentNode->data) == element)
-            delete iter->currentNode;
     }
 }
 
@@ -246,11 +241,12 @@ void LinkedList<T>::iterTest() const
 {
     Iterator iter = Iterator(this->first);
 
+    std::cout<< "[ ";
     while(iter.currentNode->next != nullptr)
     {
-        std::cout << iter.currentNode->data << std::endl;
+        std::cout<< iter.currentNode->data << ", ";
         iter++;
     }
     
-    std::cout << iter.currentNode->data;
+    std::cout << iter.currentNode->data << " ]";
 }

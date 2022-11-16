@@ -208,7 +208,7 @@ void LinkedList<T>::pop()
 template <typename T>
 void LinkedList<T>::clear()
 {
-    if (!this->first)
+    if (this->isEmpty())
     {
         return;
     }
@@ -236,6 +236,17 @@ void LinkedList<T>::remove(T element)
     {
         if(currentNode->data == element)
         {
+            if(currentNode == this->first)
+            {
+                this->dequeue();
+                return;
+            }
+            if(currentNode == this->last)
+            {
+                this->pop();
+                return;
+            }
+
             if(currentNode->previous)
                 currentNode->previous->next = currentNode->next;
 

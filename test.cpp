@@ -44,7 +44,11 @@ int main()
 
     
     cout << endl << endl<< "Remove Test on middle element" << endl;
-    list.remove("charlie");
+    list.remove("echo");
+    list.iterTest();
+        
+    cout << endl << endl<< "Pop Test" << endl;
+    list.pop();
     list.iterTest();
 
     cout << endl << endl<< "Clear Test on full list" << endl;

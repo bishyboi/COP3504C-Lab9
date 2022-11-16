@@ -16,6 +16,11 @@ public:
         Node *previous;
 
         Node(T _data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
+
+        ~Node()
+        {
+            delete data;
+        }
     };
 
     class Iterator
@@ -199,7 +204,8 @@ void LinkedList<T>::clear()
     Node *temp = nullptr;
     while(iter.currentNode->next)
     {
-        temp = iter.currentNode;
+        temp = *(iter.currentNode);
+
         iter++;
     }
 

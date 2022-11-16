@@ -25,6 +25,7 @@ int main()
     cout << endl
          << endl
          <<
+
     "Remove Test #1:" << endl;
     list.remove("alpha");
     list.iterTest();
@@ -37,6 +38,9 @@ int main()
     
     "Remove Test #3:" << endl;
     list.remove("golf");
+    list.iterTest();
+
+    list.clear();
     list.iterTest();
     
     return 0;

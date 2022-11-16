@@ -191,6 +191,7 @@ void LinkedList<T>::dequeue()
     Node *second = this->first->next;
     delete this->first;
     this->first = second;
+    this->first->previous = nullptr;
 }
 
 template <typename T>
@@ -219,7 +220,6 @@ void LinkedList<T>::clear()
         delete nextNode->previous;
     }
 
-    std::cout << "Cleared";
     this->first = nullptr;
     this->last = nullptr;
 }
@@ -227,17 +227,25 @@ void LinkedList<T>::clear()
 template <typename T>
 void LinkedList<T>::remove(T element)
 {     
-    LinkedList<T>::Iterator iter = Iterator(this->first);
+    if (!this->first)
+        return;
 
-    while (iter.currentNode->data != element && iter.currentNode->next != nullptr)
+    Node *currentNode = this->first;
+
+    while(currentNode->next)
     {
-        if (iter.currentNode->data == element)
-            iter.currentNode->previous->next = iter.currentNode->next;
-            iter.currentNode->next->previous = iter.currentNode->previous;
-            delete iter.currentNode;
-            return;
+        if(currentNode->data == element)
+        {
+            if(currentNode->previous)
+                currentNode->previous->next = currentNode->next;
 
-        iter++;
+            if(currentNode->next)
+                currentNode->next->previous = currentNode->previous;
+            
+            delete currentNode;
+        }
+
+        currentNode = currentNode->next;
     }
 }
 

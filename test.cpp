@@ -17,6 +17,8 @@ int main()
     list.enqueue("echo");
     list.enqueue("foxtrot");
     list.enqueue("golf");
+    list.enqueue("far");
+    list.enqueue("six");
 
     cout << endl
          << "Iterator Test:" << endl;
@@ -32,7 +34,20 @@ int main()
     list.dequeue();
     list.iterTest();
 
-    cout << "Clear Test on full list" << endl;
+    cout << endl << endl<< "Remove Test on first element" << endl;
+    list.remove("bravo");
+    list.iterTest();
+
+    cout << endl << endl<< "Remove Test on last element" << endl;
+    list.remove("six");
+    list.iterTest();
+
+    
+    cout << endl << endl<< "Remove Test on middle element" << endl;
+    list.remove("charlie");
+    list.iterTest();
+
+    cout << endl << endl<< "Clear Test on full list" << endl;
     list.clear();
     list.iterTest();
 

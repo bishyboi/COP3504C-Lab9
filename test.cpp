@@ -15,10 +15,6 @@ int main()
     list.enqueue(6);
     list.enqueue(7);
     
-
-    // int *ptr = nullptr;
-    // char *chptr = nullptr;
-    // cout<< ptr <<  chptr << endl;
     cout << endl
          << "Iterator Test:" << endl;
 

@@ -176,13 +176,17 @@ void LinkedList<T>::enqueue(T element)
     }
     else
     {
-        Node *newNode = new Node(element, this->last, nullptr);
+        Node *newNode = new Node(element, nullptr, this->last);
+
+        std::cout << "The last node is " << this->last->data << std::endl;
         this->last->next = newNode;
-        std::cout << "End of list now points to New Node" << std::endl;
+        std::cout << "End of list now points to "<< this->last->next->data << std::endl;
 
         this->last = newNode;
         std::cout<< "Changing end of list to be New Node" << std::endl;
 
+        if(this->last->next)
+            std::cout<< "It is not pointing towards nullptr. This needs to be fixed" << std::endl;
     }
 }
 
@@ -230,13 +234,12 @@ template <typename T>
 void LinkedList<T>::iterTest() const
 {
     Iterator iter = Iterator(this->first);
-    std::cout << iter.currentNode->data;
+
     while(iter.currentNode->next != nullptr)
     {
         std::cout << iter.currentNode->data << std::endl;
         iter++;
     }
     
-    std::cout<< "HIT 3";
     std::cout << iter.currentNode->data;
 }

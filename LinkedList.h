@@ -16,11 +16,8 @@ public:
         Node *previous;
 
         Node(T _data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
-
-        ~Node()
-        {
-            delete data;
-        }
+        
+        ~Node() {}
     };
 
     class Iterator
@@ -199,16 +196,18 @@ void LinkedList<T>::pop()
 template <typename T>
 void LinkedList<T>::clear()
 {
-    LinkedList<T>::Iterator iter = Iterator(this->first);
-    
-    Node *temp = nullptr;
-    while(iter.currentNode->next)
-    {
-        temp = *(iter.currentNode);
+    Node *deleteNode = this->first;
+    Node *nextNode = deleteNode->next;
 
-        iter++;
+    while(nextNode)
+    {
+        nextNode = nextNode->next;
+        delete nextNode->previous;
     }
 
+    std::cout << "Cleared";
+    this->first = nullptr;
+    this->last = nullptr;
 }
 
 template <typename T>
@@ -234,11 +233,16 @@ void LinkedList<T>::iterTest() const
     Iterator iter = Iterator(this->first);
 
     std::cout<< "[ ";
-    while(iter.currentNode->next != nullptr)
+    if(this->first)
     {
-        std::cout<< iter.currentNode->data << ", ";
-        iter++;
+        while(iter.currentNode->next != nullptr)
+        {
+            std::cout<< iter.currentNode->data << ", ";
+            iter++;
+        }
+
+        std::cout << iter.currentNode->data;
     }
     
-    std::cout << iter.currentNode->data << " ]";
+    std::cout << " ]";
 }

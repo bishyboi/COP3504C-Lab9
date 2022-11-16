@@ -23,23 +23,13 @@ int main()
 
     list.iterTest();
     cout << endl
-         << endl
-         <<
+         << endl;
 
-    "Remove Test #1:" << endl;
-    list.remove("alpha");
-    list.iterTest();
-    cout<< endl << endl <<
-    
-    "Remove Test #2:" << endl;
-    list.remove("charlie");
-    list.iterTest();
-    cout<< endl << endl <<
-    
-    "Remove Test #3:" << endl;
-    list.remove("golf");
+    cout << "Clear Test on full list" << endl;
+    list.clear();
     list.iterTest();
 
+    cout << endl << endl<< "Clear Test on empty list" << endl;
     list.clear();
     list.iterTest();
     

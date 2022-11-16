@@ -227,7 +227,7 @@ void LinkedList<T>::iterTest() const
     iter++;
     std::cout << "d";
     std::cout << iter.currentNode->data;
-    
+    std::cout << "e";
     while(iter.currentNode->next != nullptr)
     {
         std::cout << "HIT 1"<< iter.currentNode->data << "HIT 2" << std::endl;

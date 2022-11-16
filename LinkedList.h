@@ -61,11 +61,8 @@ public:
         Iterator& operator++(int)
         {
             if(this->currentNode)
-                std::cout<< "a";
                 this->currentNode = this->currentNode->next;
-                std::cout<< "b";
 
-            std::cout << "c";
             return *this;
         }
 
@@ -170,14 +167,23 @@ bool LinkedList<T>::contains(T element) const
 template <typename T>
 void LinkedList<T>::enqueue(T element)
 {
-    Node *newNode = new Node(element, this->last, nullptr);
 
-    if (this->first == nullptr)
+    if (!this->first)
     {
+        Node *newNode = new Node(element, nullptr, nullptr);
         this->first = newNode;
+        this->last = newNode;
     }
-    
-    this->last = newNode;   
+    else
+    {
+        Node *newNode = new Node(element, this->last, nullptr);
+        this->last->next = newNode;
+        std::cout << "End of list now points to New Node" << std::endl;
+
+        this->last = newNode;
+        std::cout<< "Changing end of list to be New Node" << std::endl;
+
+    }
 }
 
 // template <typename T>
@@ -224,13 +230,10 @@ template <typename T>
 void LinkedList<T>::iterTest() const
 {
     Iterator iter = Iterator(this->first);
-    iter++;
-    std::cout << "d";
     std::cout << iter.currentNode->data;
-    std::cout << "e";
     while(iter.currentNode->next != nullptr)
     {
-        std::cout << "HIT 1"<< iter.currentNode->data << "HIT 2" << std::endl;
+        std::cout << iter.currentNode->data << std::endl;
         iter++;
     }
     

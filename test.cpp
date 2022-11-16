@@ -9,11 +9,12 @@ int main()
     std::vector<int> vec = {3, 5, 3, 6, 7};
     LinkedList<int> list;
 
-    for (int x : vec)
-    {
-        //cout << x << endl ;
-        list.enqueue(x);
-    }
+    list.enqueue(3);
+    list.enqueue(4);
+    list.enqueue(5);
+    list.enqueue(6);
+    list.enqueue(7);
+    
 
     // int *ptr = nullptr;
     // char *chptr = nullptr;

@@ -95,12 +95,12 @@ public:
     Node *last = nullptr;
 
     LinkedList() {}
-    // Iterator begin() const;
-    // Iterator tail() const;
-    // Iterator end() const;
-    // bool isEmpty() const;
-    // T getFront() const;
-    // T getBack() const;
+    Iterator begin() const;
+    Iterator tail() const;
+    Iterator end() const;
+    bool isEmpty() const;
+    T getFront() const;
+    T getBack() const;
     bool contains(T element) const;
     void enqueue(T element);
     // void dequeue();
@@ -111,41 +111,43 @@ public:
     void iterTest() const;
 };
 
-// template <typename T>
-// typename LinkedList<T>::Iterator LinkedList<T>::begin() const
-// {
-//     return LinkedList<T>::Iterator(this->first);
-// }
+template <typename T>
+typename LinkedList<T>::Iterator LinkedList<T>::begin() const
+{
+    return LinkedList<T>::Iterator(this->first);
+}
 
-// template <typename T>
-// typename LinkedList<T>::Iterator LinkedList<T>::tail() const
-// {
-//     return LinkedList<T>::Iterator(this->last);
-// }
+template <typename T>
+typename LinkedList<T>::Iterator LinkedList<T>::tail() const
+{
+    return LinkedList<T>::Iterator(this->last);
+}
 
-// template <typename T>
-// typename LinkedList<T>::Iterator LinkedList<T>::end() const
-// {
-//     return LinkedList<T>::Iterator(nullptr);
-// }
+template <typename T>
+typename LinkedList<T>::Iterator LinkedList<T>::end() const
+{
+    Iterator iter = Iterator(this->last);
+    iter++;
+    return iter;
+}
 
-// template <typename T>
-// bool LinkedList<T>::isEmpty() const
-// {
-//     return (this->first == nullptr);
-// }
+template <typename T>
+bool LinkedList<T>::isEmpty() const
+{
+    return !(this->first);
+}
 
-// template <typename T>
-// T LinkedList<T>::getFront() const
-// {
-//     return (this->first->data);
-// }
+template <typename T>
+T LinkedList<T>::getFront() const
+{
+    return this->first->data;
+}
 
-// template <typename T>
-// T LinkedList<T>::getBack() const
-// {
-//     return *(this->last);
-// }
+template <typename T>
+T LinkedList<T>::getBack() const
+{
+    return this->last->data;
+}
 
 template <typename T>
 bool LinkedList<T>::contains(T element) const

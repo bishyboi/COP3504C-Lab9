@@ -14,7 +14,7 @@ int main()
     list.enqueue(5);
     list.enqueue(6);
     list.enqueue(7);
-    
+
     cout << endl
          << "Iterator Test:" << endl;
 
@@ -24,9 +24,9 @@ int main()
 
 
     cout << endl;
-    cout << "contains(): Test #1: " << (list.contains(5) ? "Pass" : "Fail") << endl;
-    cout << "contains(): Test #2: " << (list.contains(6) ? "Pass" : "Fail") << endl;
-    cout << "contains(): Test #3: " << (!list.contains(1) ? "Pass" : "Fail")<< endl;
+    cout << "contains(): Test #1: " << ((list.contains(5)==true) ? "Pass" : "Fail") << endl;
+    cout << "contains(): Test #2: " << ((list.contains(6)==true) ? "Pass" : "Fail") << endl;
+    cout << "contains(): Test #3: " << ((list.contains(1)==false) ? "Pass" : "Fail")<< endl;
 
     return 0;
 }

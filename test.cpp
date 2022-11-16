@@ -22,13 +22,20 @@ int main()
          << "Iterator Test:" << endl;
 
     list.iterTest();
-
+    cout << endl
+         << endl
+         <<
+    "Remove Test #1:" << endl;
     list.remove("alpha");
     list.iterTest();
-    cout<< endl;
+    cout<< endl << endl <<
+    
+    "Remove Test #2:" << endl;
     list.remove("charlie");
     list.iterTest();
-    cout<< endl;
+    cout<< endl << endl <<
+    
+    "Remove Test #3:" << endl;
     list.remove("golf");
     list.iterTest();
     

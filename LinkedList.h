@@ -16,22 +16,6 @@ public:
         Node *previous;
 
         Node(T _data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
-
-        ~Node()
-        {
-
-            if (this->previous != nullptr)
-            {
-                delete this->previous->next;
-                this->previous->next = this->next;
-            }
-
-            if (this->next != nullptr)
-            {
-                delete this->next->previous;
-                this->next->previous = this->previous;
-            } 
-        }
     };
 
     class Iterator
@@ -223,14 +207,16 @@ void LinkedList<T>::clear()
 
 template <typename T>
 void LinkedList<T>::remove(T element)
-{
-    // Iterate through list until first occurrence of data using iterator
+{     
     LinkedList<T>::Iterator iter = Iterator(this->first);
-    // Delete using ~Node destructor
-    while((iter.currentNode->data) != element)
+
+    while (iter.currentNode->data != element && iter.currentNode->next != nullptr)
     {
-        if ((iter.currentNode->data) == element)
+        if (iter.currentNode->data == element)
+            iter.currentNode->previous->next = iter.currentNode->next;
+            iter.currentNode->next->previous = iter.currentNode->previous;
             delete iter.currentNode;
+            return;
 
         iter++;
     }

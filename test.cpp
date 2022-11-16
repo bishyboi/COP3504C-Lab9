@@ -25,6 +25,10 @@ int main()
     cout << endl
          << endl;
 
+    cout << "Dequeue Test";
+    list.dequeue();
+    list.iterTest();
+
     cout << "Clear Test on full list" << endl;
     list.clear();
     list.iterTest();

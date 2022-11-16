@@ -16,8 +16,16 @@ public:
         Node *previous;
 
         Node(T _data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
+
+        ~Node()
+        {
+            delete this->previous->next;
+            delete this->next->previous;
+
+            delete this->next;
+            delete this->previous;
+        }
         
-        ~Node() {}
     };
 
     class Iterator
@@ -177,9 +185,12 @@ void LinkedList<T>::enqueue(T element)
 template <typename T>
 void LinkedList<T>::dequeue()
 {
-    Node *second = this->first->next;
-    this->first = second;
+    Node *deleteNode = this->first;
+    this->first = this->first->next;
     delete this->first->previous;
+    this->first->previous= nullptr;
+
+    delete deleteNode;
 }
 
 template <typename T>

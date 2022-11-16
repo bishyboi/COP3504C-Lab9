@@ -25,7 +25,10 @@ int main()
     cout << endl
          << endl;
 
-    cout << "Dequeue Test";
+    int *ptr = nullptr;
+
+
+    cout << "Dequeue Test" << endl;
     list.dequeue();
     list.iterTest();
 

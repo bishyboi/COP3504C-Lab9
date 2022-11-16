@@ -17,14 +17,17 @@ public:
 
         Node(T _data, Node *_next = nullptr, Node *_previous = nullptr) : data(_data), next(_next), previous(_previous) {}
 
-        ~Node()
-        {
-            delete this->previous->next;
-            delete this->next->previous;
+        // ~Node()
+        // {
+        //     if(this->previous)
+        //         this->previous->next = this->next;
+        //     if(this->next)
+        //         std::cout<< "Rebinding next node to nullptr";
+        //         this->next->previous = this->previous;
 
-            delete this->next;
-            delete this->previous;
-        }
+        //     std::cout << "deleting self";
+        //     delete this; 
+        // }
         
     };
 
@@ -84,7 +87,7 @@ public:
         
         friend class LinkedList;
     };
-
+    
     Node *first = nullptr;
     Node *last = nullptr;
 
@@ -185,12 +188,9 @@ void LinkedList<T>::enqueue(T element)
 template <typename T>
 void LinkedList<T>::dequeue()
 {
-    Node *deleteNode = this->first;
-    this->first = this->first->next;
-    delete this->first->previous;
-    this->first->previous= nullptr;
-
-    delete deleteNode;
+    Node *second = this->first->next;
+    delete this->first;
+    this->first = second;
 }
 
 template <typename T>
@@ -207,10 +207,13 @@ void LinkedList<T>::pop()
 template <typename T>
 void LinkedList<T>::clear()
 {
-    Node *deleteNode = this->first;
-    Node *nextNode = deleteNode->next;
+    if (!this->first)
+    {
+        return;
+    }
+    Node *nextNode = this->first;
 
-    while(nextNode)
+    while(nextNode->next)
     {
         nextNode = nextNode->next;
         delete nextNode->previous;

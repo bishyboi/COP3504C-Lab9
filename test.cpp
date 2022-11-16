@@ -11,15 +11,21 @@ int main()
 
     for (int x : vec)
     {
-        cout << x << endl ;
+        //cout << x << endl ;
         list.enqueue(x);
     }
 
+    // int *ptr = nullptr;
+    // char *chptr = nullptr;
+    // cout<< ptr <<  chptr << endl;
     cout << endl
          << "Iterator Test:" << endl;
+
     list.iterTest();
     cout << endl;
-    
+
+
+
     cout << endl;
     cout << "contains(): Test #1: " << (list.contains(5) ? "Pass" : "Fail") << endl;
     cout << "contains(): Test #2: " << (list.contains(6) ? "Pass" : "Fail") << endl;

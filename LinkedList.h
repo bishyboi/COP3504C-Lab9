@@ -53,13 +53,19 @@ public:
         // TODO: Ensure that final result matches end() function
         Iterator& operator++()
         {
-            this->currentNode = currentNode->next;
+            if(this->currentNode)
+                this->currentNode= this->currentNode->next;
             return *this;
         }
 
         Iterator& operator++(int)
         {
-            this->currentNode = currentNode->next;
+            if(this->currentNode)
+                std::cout<< "a";
+                this->currentNode = this->currentNode->next;
+                std::cout<< "b";
+
+            std::cout << "c";
             return *this;
         }
 
@@ -157,6 +163,7 @@ bool LinkedList<T>::contains(T element) const
         if (iter.currentNode->data == element)
             return true;
     }
+
     return false;
 }
 
@@ -217,12 +224,16 @@ template <typename T>
 void LinkedList<T>::iterTest() const
 {
     Iterator iter = Iterator(this->first);
-
+    iter++;
+    std::cout << "d";
+    std::cout << iter.currentNode->data;
+    
     while(iter.currentNode->next != nullptr)
     {
-        std::cout << iter.currentNode->data << "HI" << std::endl;
+        std::cout << "HIT 1"<< iter.currentNode->data << "HIT 2" << std::endl;
         iter++;
     }
-
+    
+    std::cout<< "HIT 3";
     std::cout << iter.currentNode->data;
 }

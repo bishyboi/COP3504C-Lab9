@@ -149,7 +149,7 @@ T LinkedList<T>::getBack() const
 template <typename T>
 bool LinkedList<T>::contains(T element) const
 {
-    if(this->first == nullptr)
+    if(this->isEmpty())
         return false;
         
     LinkedList<T>::Iterator iter = Iterator(this->first);
@@ -188,23 +188,35 @@ void LinkedList<T>::enqueue(T element)
 template <typename T>
 void LinkedList<T>::dequeue()
 {
-    Node *second = this->first->next;
-    delete this->first;
-    this->first = second;
-    this->first->previous = nullptr;
+    if(this->first->next)
+    {
+        Node *second = this->first->next;
+        delete this->first;
+        this->first = second;
+        this->first->previous = nullptr;
+    } else{
+        delete this->first;
+        this->first = nullptr;
+        this->last = nullptr;
+    }
 }
 
 template <typename T>
 void LinkedList<T>::pop()
 {
-    Node *secondToLast = this->last->previous;
-    delete this->last;
-    this->last = secondToLast;
-    this->last->next = nullptr;
+    if(this->last->previous)
+    {
+        Node *secondToLast = this->last->previous;
+        delete this->last;
+        this->last = secondToLast;
+        this->last->next = nullptr;
+    } else{
+        delete this->last;
+        this->first = nullptr;
+        this->last = nullptr;
+    }
 }
 
-
-// //FIXME: Incomplete
 template <typename T>
 void LinkedList<T>::clear()
 {
@@ -232,7 +244,7 @@ void LinkedList<T>::remove(T element)
 
     Node *currentNode = this->first;
 
-    while(currentNode->next)
+    while(currentNode != this->last)
     {
         if(currentNode->data == element)
         {
@@ -241,23 +253,19 @@ void LinkedList<T>::remove(T element)
                 this->dequeue();
                 return;
             }
-            if(currentNode == this->last)
-            {
-                this->pop();
-                return;
-            }
 
-            if(currentNode->previous)
-                currentNode->previous->next = currentNode->next;
-
-            if(currentNode->next)
-                currentNode->next->previous = currentNode->previous;
+            currentNode->previous->next = currentNode->next;
+            currentNode->next->previous = currentNode->previous;
             
             delete currentNode;
+            return;
         }
 
         currentNode = currentNode->next;
     }
+
+    if(this->last->data == element)
+        this->pop();
 }
 
 template <typename T>

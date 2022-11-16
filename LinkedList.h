@@ -103,10 +103,10 @@ public:
     T getBack() const;
     bool contains(T element) const;
     void enqueue(T element);
-    // void dequeue();
-    // void pop();
-    // void clear();
-    // void remove(T element);
+    void dequeue();
+    void pop();
+    void clear();
+    void remove(T element);
 
     void iterTest() const;
 };
@@ -192,45 +192,54 @@ void LinkedList<T>::enqueue(T element)
     }
 }
 
-// template <typename T>
-// void LinkedList<T>::dequeue()
-// {
-//     Node *second = this->first->next;
-//     delete this->first;
-//     this->first = second;
-// }
+template <typename T>
+void LinkedList<T>::dequeue()
+{
+    Node *secondNode = this->first->next;
+    delete this->first;
 
-// template <typename T>
-// void LinkedList<T>::pop()
-// {
-//     Node *secondToLast = this->last->previous;
-//     delete this->last;
-//     this->last = secondToLast;
-// }
+    this->first = secondNode;
+    this->first->previous = nullptr;
+}
+
+template <typename T>
+void LinkedList<T>::pop()
+{
+    Node *secondToLast = this->last->previous;
+    delete this->last;
+    this->last = secondToLast;
+    this->last->next = nullptr;
+}
 
 
 // //FIXME: Incomplete
-// template <typename T>
-// void LinkedList<T>::clear()
-// {
-//     LinkedList<T>::Iterator iter = Iterator(this->first);
-//     Node *nextNode = nullptr;
+template <typename T>
+void LinkedList<T>::clear()
+{
+    LinkedList<T>::Iterator iter = Iterator(this->first);
     
-// }
+    Node *temp = nullptr;
+    while(iter.currentNode->next)
+    {
+        temp = *iter.currentNode;
+        iter++;
+    }
 
-// template <typename T>
-// void LinkedList<T>::remove(T element)
-// {
-//     // Iterate through list until first occurrence of data using iterator
-//     LinkedList<T>::Iterator iter = Iterator(this->first);
-//     // Delete using ~Node destructor
-//     while(*(iter->currentNode->data) != element)
-//     {
-//         iter++;
-//         if (*(iter->currentNode->data) == element)
-//             delete iter->currentNode;
-//     }
-// }
+}
+
+template <typename T>
+void LinkedList<T>::remove(T element)
+{
+    // Iterate through list until first occurrence of data using iterator
+    LinkedList<T>::Iterator iter = Iterator(this->first);
+    // Delete using ~Node destructor
+    while(*(iter->currentNode->data) != element)
+    {
+        iter++;
+        if (*(iter->currentNode->data) == element)
+            delete iter->currentNode;
+    }
+}
 
 template <typename T>
 void LinkedList<T>::iterTest() const
